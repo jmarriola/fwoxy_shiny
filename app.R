@@ -64,8 +64,8 @@ server <- function(input, output) {
      wspd_const <- input$wspd_const
      
      # Run fwoxy R package
-     fwoxy(a_param = a_param, er_param = er_param, ht_const = ht_const, 
-           salt_const = salt_const, temp_const = temp_const, wspd_const = wspd_const)
+     fwoxy(a_param = a_param, er_param = er_param, ht_in = ht_const, 
+           salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
      
    })
    
