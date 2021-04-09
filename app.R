@@ -6,6 +6,7 @@
 library(shiny)
 library(devtools)
 devtools::install_github('jmarriola/fwoxy')
+library(fwoxy)
 
 # Define UI for fwoxy
 # Each slider is an input into the fwoxy model
@@ -50,7 +51,7 @@ ui <- fluidPage(
 
 # Define server logic required to output oxy concentrations and fluxes
 server <- function(input, output) {
-  
+
    # Oxygen Concentration plot
    output$fluxPlot <- renderPlot({
      
@@ -62,7 +63,9 @@ server <- function(input, output) {
      temp_const <- input$temp_const
      wspd_const <- input$wspd_const
      
-     
+     # Run fwoxy R package
+     fwoxy(a_param = a_param, er_param = er_param, ht_const = ht_const, 
+           salt_const = salt_const, temp_const = temp_const, wspd_const = wspd_const)
      
    })
    
