@@ -19,6 +19,9 @@ ui <- fluidPage(
    sidebarLayout(
      sidebarPanel(
        
+       sliderInput("oxy_ic", h4("Oxygen Concentration (mmol/m3)"),
+                   min = 100, max = 300, value = 250, step = 25),
+       
        sliderInput("a_param", h4("Light efficiency (W/m2)"),
                         min = 0.1, max = 1.0, value = 0.2, step = 0.1),
        
@@ -56,6 +59,7 @@ server <- function(input, output) {
    output$fluxPlot <- renderPlot({
      
      # Input from UI
+     oxy_ic <- input$oxy_ic
      a_param <- input$a_param
      er_param <- input$er_param
      ht_const <- input$ht_const
@@ -64,7 +68,7 @@ server <- function(input, output) {
      wspd_const <- input$wspd_const
      
      # Run fwoxy R package
-     fwoxy(a_param = a_param, er_param = er_param, ht_in = ht_const, 
+     fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
            salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
      
    })
