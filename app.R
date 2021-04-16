@@ -74,18 +74,19 @@ server <- function(input, output) {
     
      
      # Run fwoxy R package
-     results <- reactive({
-       fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
+     results <- fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
              salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
-     })
+    
      
      # Set up plots
      labels <- c('1'='0','43201'='12','86401'='0','129601'='12','172801'='0',
                  '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
                  '432001'='0','475201'='12')
      breaks <- seq(1,518400,by=43200)
-    
+     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
+     colnames(results) <- varb
      
+    
      # Oxygen Concentration plot
      
       oxyPlot <- ggplot(results, aes(x = t, y = c)) +
@@ -99,44 +100,46 @@ server <- function(input, output) {
   )  
   
   # Plot 2
-  #output$fluxPlot <- renderPlot({ 
+  output$fluxPlot <- renderPlot({ 
     
     # Input from UI
-    #oxy_ic <- input$oxy_ic
-    #a_param <- input$a_param
-    #er_param <- input$er_param
-    #ht_const <- input$ht_const
-    #salt_const <- input$salt_const
-    #temp_const <- input$temp_const
-    #wspd_const <- input$wspd_const
+    oxy_ic <- input$oxy_ic
+    a_param <- input$a_param
+    er_param <- input$er_param
+    ht_const <- input$ht_const
+    salt_const <- input$salt_const
+    temp_const <- input$temp_const
+    wspd_const <- input$wspd_const
     
     
     # Run fwoxy R package
-    #results <- reactive({
-      #fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
-            #salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
-    #})
+    results <- fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
+            salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
+  
     
     # Set up plots
-    #labels <- c('1'='0','43201'='12','86401'='0','129601'='12','172801'='0',
-               # '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
-               # '432001'='0','475201'='12')
-    #breaks <- seq(1,518400,by=43200)
-    #colors <- c(gasexd = "red3", gppd = "orange", erd = "purple4", dcdtd = "steelblue3")
-    #fluxes <- data.frame(t, gasexd, gppd, erd, dcdtd)
-    #resultsNew <- fluxes %>% pivot_longer(cols = gasexd:dcdtd, names_to = 'Variables', values_to = "Value")
+    labels <- c('1'='0','43201'='12','86401'='0','129601'='12','172801'='0',
+                '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
+                '432001'='0','475201'='12')
+    breaks <- seq(1,518400,by=43200)
+    varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
+    colnames(results) <- varb
+    colors <- c(gasexd = "red3", gppd = "orange", erd = "purple4", dcdtd = "steelblue3")
+    fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
+    colnames(fluxes) <- c('t', 'gasexd', 'gppd', 'erd', 'dcdtd')
+    resultsNew <- fluxes %>% pivot_longer(cols = gasexd:dcdtd, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
-    #fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
-     # theme_bw() +
-     # geom_line() +
-     # labs(x = "Hour of day", y = "Flux, mmol/m3/day") +
-     # scale_color_manual(values = colors) +
-     # scale_x_continuous(breaks = breaks, labels = labels)
+    fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
+      theme_bw() +
+      geom_line() +
+      labs(x = "Hour of day", y = "Flux, mmol/m3/day") +
+      scale_color_manual(values = colors) +
+      scale_x_continuous(breaks = breaks, labels = labels)
   
-    #print(fluxPlot)
-  #}
- #)
+    print(fluxPlot)
+  }
+ )
 }
 
 # Run the application 
