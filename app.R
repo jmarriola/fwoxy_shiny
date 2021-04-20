@@ -90,10 +90,12 @@ server <- function(input, output) {
      # Oxygen Concentration plot
      
       oxyPlot <- ggplot(results, aes(x = t, y = c)) +
-                 geom_line(colour = "blue") +
-                 labs(x = "Hour of day", y = "oxy, mmol/m3") +
+                 geom_line(colour = "blue", size = 1.05) +
+                 labs(x = "Hour of day", y = "oxy, mmol/m3", title = "Dissolved Oxygen Concentration") +
                  theme_bw() +
-                 scale_x_continuous(breaks = breaks, labels = labels)
+                 scale_x_continuous(breaks = breaks, labels = labels) +
+                 theme(axis.text=element_text(size=12), axis.title=element_text(size=14),
+                       plot.title=element_text(size=20, face="bold"))
       
       print(oxyPlot)
     }
@@ -124,18 +126,21 @@ server <- function(input, output) {
     breaks <- seq(1,518400,by=43200)
     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
     colnames(results) <- varb
-    colors <- c(gasexd = "red3", gppd = "orange", erd = "purple4", dcdtd = "steelblue3")
+    colors <- c(kw = "red3", GPP = "orange", ER = "purple4", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
-    colnames(fluxes) <- c('t', 'gasexd', 'gppd', 'erd', 'dcdtd')
-    resultsNew <- fluxes %>% pivot_longer(cols = gasexd:dcdtd, names_to = 'Variables', values_to = "Value")
+    colnames(fluxes) <- c('t', 'kw', 'GPP', 'ER', 'TROC')
+    resultsNew <- fluxes %>% pivot_longer(cols = kw:TROC, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
     fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
       theme_bw() +
-      geom_line() +
-      labs(x = "Hour of day", y = "Flux, mmol/m3/day") +
+      geom_line(size = 1.05) +
+      labs(x = "Hour of day", y = "Flux, mmol/m3/day", title = "Fluxes") +
       scale_color_manual(values = colors) +
-      scale_x_continuous(breaks = breaks, labels = labels)
+      scale_x_continuous(breaks = breaks, labels = labels) +
+      theme(legend.position = c(0.96,0.85), axis.text=element_text(size=12), axis.title=element_text(size=14),
+            legend.title=element_blank(), legend.text=element_text(size=12), 
+            plot.title=element_text(size=20, face="bold"))
   
     print(fluxPlot)
   }
