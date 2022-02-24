@@ -5,7 +5,7 @@
 #
 library(shiny)
 library(devtools)
-devtools::install_github('jmarriola/fwoxy')
+devtools::install_github('jmarriola/fwoxy@v1.0')
 library(fwoxy)
 library(ggplot2)
 library(grid)
