@@ -24,13 +24,13 @@ ui <- fluidPage(
    sidebarLayout(
      sidebarPanel(
        
-       sliderInput("oxy_ic", h4("Oxygen Concentration (mmol/m3)"),
+       sliderInput("oxy_ic", h4("Initial Oxygen Concentration (mmol/m3)"),
                    min = 100, max = 300, value = 250, step = 25),
        
-       sliderInput("a_param", h4("Light efficiency (W/m2)"),
+       sliderInput("a_param", h4("Light efficiency (mmol/m3 / W/m2)"),
                         min = 0.1, max = 1.0, value = 0.2, step = 0.1),
        
-       sliderInput("er_param", h4("Ecosystem respiration (mmol/m3)"),
+       sliderInput("er_param", h4("Ecosystem respiration (mmol/m3/day)"),
                         min = 0, max = 80, value = 20, step = 10),
        
        sliderInput("ht_const", h4("Depth of water (m)"),
