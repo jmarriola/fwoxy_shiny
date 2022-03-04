@@ -27,7 +27,7 @@ ui <- fluidPage(
        sliderInput("oxy_ic", h4("Initial Oxygen Concentration (mmol/m3)"),
                    min = 100, max = 300, value = 250, step = 25),
        
-       sliderInput("a_param", h4("Light efficiency (mmol/m3 / W/m2)"),
+       sliderInput("a_param", h4("Light efficiency ((mmol/m3) / (W/m2))"),
                         min = 0.1, max = 1.0, value = 0.2, step = 0.1),
        
        sliderInput("er_param", h4("Ecosystem respiration (mmol/m3/day)"),
@@ -125,9 +125,9 @@ server <- function(input, output) {
     breaks <- seq(1,518400,by=43200)
     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
     colnames(results) <- varb
-    colors <- c(kw = "red3", GPP = "orange", ER = "purple4", TROC = "steelblue3")
+    colors <- c(gasexd = "red3", GPP = "orange", ER = "purple4", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
-    colnames(fluxes) <- c('t', 'kw', 'GPP', 'ER', 'TROC')
+    colnames(fluxes) <- c('t', 'gasexd', 'GPP', 'ER', 'TROC')
     resultsNew <- fluxes %>% pivot_longer(cols = kw:TROC, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
