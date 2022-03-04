@@ -128,7 +128,7 @@ server <- function(input, output) {
     colors <- c(gasexd = "red3", GPP = "orange", ER = "purple4", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
     colnames(fluxes) <- c('t', 'gasexd', 'GPP', 'ER', 'TROC')
-    resultsNew <- fluxes %>% pivot_longer(cols = kw:TROC, names_to = 'Variables', values_to = "Value")
+    resultsNew <- fluxes %>% pivot_longer(cols = gasexd:TROC, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
     fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
