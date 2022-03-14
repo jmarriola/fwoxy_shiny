@@ -24,14 +24,14 @@ ui <- fluidPage(
    sidebarLayout(
      sidebarPanel(
        
-       sliderInput("oxy_ic", h4("Initial Oxygen Concentration (mmol/m3)"),
-                   min = 100, max = 300, value = 250, step = 25),
-       
-       sliderInput("a_param", h4("Light efficiency ((mmol/m3) / (W/m2))"),
-                        min = 0.1, max = 1.0, value = 0.2, step = 0.1),
-       
-       sliderInput("er_param", h4("Ecosystem respiration (mmol/m3/day)"),
-                        min = 0, max = 80, value = 20, step = 10),
+      sliderInput("oxy_ic", h4(HTML(paste0("Initial oxygen concentration (mmol/m",tags$sup("3"),")"))),
+                  min = 100, max = 300, value = 250, step = 25),
+      
+      sliderInput("a_param", h4(HTML(paste0("Light efficiency ((mmol/m",tags$sup("3"),") / (W/m",tags$sup("2"),"))"))),
+                  min = 0.1, max = 1.0, value = 0.2, step = 0.1),
+      
+      sliderInput("er_param", h4(HTML(paste0("Ecosystem respiration (mmol/m",tags$sup("3"),"/day)"))),
+                  min = 0, max = 80, value = 20, step = 10),
        
        sliderInput("ht_const", h4("Depth of water (m)"),
                         min = 0.5, max = 5.0, value = 3.0, step = 0.5),
@@ -47,13 +47,20 @@ ui <- fluidPage(
        
      ),
    # Output panel 
-   mainPanel(
-        plotOutput('oxyPlot'),
-        plotOutput('fluxPlot')
-      
+    mainPanel(
+      plotOutput('oxyPlot'),
+      plotOutput('fluxPlot'),
+      br(),
+      fluidRow(
+        align = "center",
+        em(span("ER = Ecosystem Respiration;", style = "color:darkviolet"),
+         span("GPP = Gross Primary Productivity;", style = "color:orange"),
+         span("GASEX = Gas Exchange;", style = "color:firebrick"),
+         span("TROC = Time Rate of Change of Oxygen", style = "color:steelblue"))),
+      br(),
+      helpText("User Help for fwoxy")) ## add a(href = ) once website established, may also need target='_blank'
     )
   )
-)
 
 
 # Define server logic required to output oxy concentrations and fluxes
@@ -93,6 +100,7 @@ server <- function(input, output) {
                  labs(x = "Hour of day", y = "oxy, mmol/m3", title = "Dissolved Oxygen Concentration") +
                  theme_bw() +
                  scale_x_continuous(breaks = breaks, labels = labels) +
+                 ylim(0,750) +
                  theme(axis.text=element_text(size=12), axis.title=element_text(size=14),
                        plot.title=element_text(size=20, face="bold"))
       
@@ -125,18 +133,19 @@ server <- function(input, output) {
     breaks <- seq(1,518400,by=43200)
     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
     colnames(results) <- varb
-    colors <- c(gasexd = "red3", GPP = "orange", ER = "purple4", TROC = "steelblue3")
+    colors <- c(GASEX = "firebrick", GPP = "orange", ER = "darkviolet", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
-    colnames(fluxes) <- c('t', 'gasexd', 'GPP', 'ER', 'TROC')
-    resultsNew <- fluxes %>% pivot_longer(cols = gasexd:TROC, names_to = 'Variables', values_to = "Value")
+    colnames(fluxes) <- c('t', 'GASEX', 'GPP', 'ER', 'TROC')
+    resultsNew <- fluxes %>% pivot_longer(cols = GASEX:TROC, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
     fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
       theme_bw() +
       geom_line(size = 1.05) +
-      labs(x = "Hour of day", y = "Flux, mmol/m3/day", title = "Fluxes") +
+      labs(x = "Hour of day", y = bquote("Flux, mmol/"~m^3/day), title = "Fluxes") +
       scale_color_manual(values = colors) +
       scale_x_continuous(breaks = breaks, labels = labels) +
+      ylim(-200,500) +
       theme(legend.position = c(0.96,0.85), axis.text=element_text(size=12), axis.title=element_text(size=14),
             legend.title=element_blank(), legend.text=element_text(size=12), 
             plot.title=element_text(size=20, face="bold"))
