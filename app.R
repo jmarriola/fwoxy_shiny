@@ -12,6 +12,7 @@ library(grid)
 library(gridExtra)
 library(lattice)
 library(tidyr)
+library(markdown)
 
 # Define UI for fwoxy
 # Each slider is an input into the fwoxy model
@@ -60,7 +61,7 @@ ui <- fluidPage(
       br(),
       actionButton("show", "Help")
     )
-  )
+  ))
 
 
 # Define server logic required to output oxy concentrations and fluxes
