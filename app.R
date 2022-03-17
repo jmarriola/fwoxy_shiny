@@ -157,7 +157,7 @@ server <- function(input, output) {
    
    observeEvent(input$show, {
     showModal(modalDialog(
-      includeMarkdown("fwoxy_doc.Rmd"),
+      withMathJax(includeMarkdown("fwoxy_doc.Rmd")),
       title = "Help",
       footer = modalButton("Dismiss"),
       size = c("l"),
