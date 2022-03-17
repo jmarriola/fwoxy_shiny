@@ -58,7 +58,7 @@ ui <- fluidPage(
          span("GASEX = Gas Exchange;", style = "color:firebrick"),
          span("TROC = Time Rate of Change of Oxygen", style = "color:steelblue"))),
       br(),
-      helpText("User Help for fwoxy")) ## add a(href = ) once website established, may also need target='_blank'
+      actionButton("show", "Help")
     )
   )
 
@@ -153,6 +153,17 @@ server <- function(input, output) {
     print(fluxPlot)
   }
  )
+   
+   observeEvent(input$show, {
+    showModal(modalDialog(
+      includeMarkdown("fwoxy_doc.Rmd"),
+      title = "Help",
+      footer = modalButton("Dismiss"),
+      size = c("l"),
+      easyClose = TRUE
+    ),
+    )
+  })
 }
 
 # Run the application 
