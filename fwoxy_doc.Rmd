@@ -1,0 +1,48 @@
+---
+title: "Forward Oxygen Model"
+output: html_document
+---
+
+This document describes the Forward Oxygen Model ($fwoxy$) that was created for the Geosc 410: Marine Biogeochemistry class as part of the air-sea gas exchange topic and homework assignment.
+
+### Oxygen Mass Balance
+
+$fwoxy$ is a forward oxygen mass balance model that predicts the oxygen concentration of a well-mixed water column given initial conditions and forcings. We use this model to understand how biogeochemical and physical processes influence ecosystem metabolism. In its simplest terms, the mass balance of oxygen is (*Eq.1*):
+$$
+\frac{\delta C}{\delta t} = GPP - ER - GASEX + ADV \hskip{20mm} Equation\, 1
+$$
+where $\frac{\delta C}{\delta t}$ is the time rate of change of oxygen ($TROC$), $GPP$ is the gross primary productivity, $ER$ is the ecosystem respiration, $GASEX$ is the gas exchange term, and $ADV$ is lateral advection. The negative sign for $GASEX$ indicates that the flux is positive moving from water to air. For the purpose of this class, $fwoxy$ assumes that $ADV$ is negligible and is not included in the $TROC$ calculations.
+<br>
+<br>
+<br>
+To understand how each of these terms affect the $TROC$, the $fwoxy$ model uses constants and forcings determined by the user and then calculates the $TROC$, $GPP$, and $GASEX$ terms (*Eq.2*):
+$$
+\frac{\delta C}{\delta t} = \alpha I - ER - (\frac{K_{O_2}}{H} * D) \hskip{35mm} Equation\, 2
+$$
+$GPP$ is calculated by multiplying $I$, the photosynthetic active radiation (W/m^2^), by the light efficiency $\alpha$ ((mmol/m^3^) / (W/m^2)). The gas exchange term, $GASEX$, is calculated by first dividing the gas transfer velocity, $K_{O_2}$ (m/s), by the height of the water column, $H$ (m), and then multiplying by the oxygen saturation deficit, $D$ (mmol/m^3^). $K_{O_2}$ is estimated using the parameterization of Wanninkhof (2014) based on wind speed (m/s), water temperature ($^{\circ}$ C) and salinity (ppt). $D$ is calculated using salinity and water temperature based on Millero and Poisson (1981) for seawater density (kg/m^3^) and Garcia and Gordon (1992) for oxygen saturation (mmol/m^3^).
+```{r}
+
+```
+
+### Using the Forward Oxygen Model Application
+#### Inputs
+In the left hand sidebar are the constants and forcings that are applied to the $TROC$ and flux calculations. Every time a slider is moved the outputs on the right hand side of the page will refresh. The $TROC$ is set to an equilibrium state upon opening the $fwoxy$ application. **To return the inputs to the initial equilibrium state just refresh the page in the internet browser.** The ranges of the parameters are based on the minimum and 95th percentile values from data collected at the Cat Point station within the Apalachicola Bay, Florida, National Estuarine Research Reserve during 2012.
+<br>
+<br>
+The top parameter is the initial oxygen concentration (mmol/m^3^), whereas the remaining parameters are constants. They are light efficiency ($\alpha$, (mmol/m^3^) / (W/m^2^)), ecosystem respiration ($ER$, mmol/m^3^/day), depth of the water column ($H$, meters), salinity (ppt), water temperature ($^{\circ}$ C), and wind speed (m/s). $I$ (Eq. 2) is based on a sin function that reaches a maximum of 400 W/m^2^ at noon every day and is zero between the hours of 6:00 pm to 6:00 am. The length of the model run is 6 days at 15 minute intervals. 
+<br>
+<br>
+
+#### Outputs
+On the right hand side are the output plots for $fwoxy$. The top panel shows the oxygen concentration (mmol/m^3^, dark blue) within the water column every 15 minutes over the 6 day model run. The bottom panel shows the $TROC$ (light blue), $GPP$ (yellow), $GASEX$ (red), and $ER$ (purple) fluxes at rates of mmol/m^3^/day for every 15 minutes over the 6 day model run. All outputs automatically refresh whenever a slider is changed. 
+<br>
+<br>
+
+#### *References*
+Garcia, H., and L.I. Gordon (1992). Oxygen solubility in seawater: Better fitting equations, Limnology & Oceanography, 376: 1307-1312.
+
+Millero, F.J. and A. Poisson (1981). International one-atmosphere equation state of water, Deep-Sea Research Part A. Oceanographic research Papers, 28(6): 625-629. 
+
+Wanninkhof, R. (2014). Relationship between wind speed and gas exchange over the ocean revisited, Limnology & Oceanography Methods, 12(6): 351-362. 
+
+
