@@ -98,7 +98,7 @@ server <- function(input, output) {
      
       oxyPlot <- ggplot(results, aes(x = t, y = c)) +
                  geom_line(colour = "blue", size = 1.05) +
-                 labs(x = "Hour of day", y = "oxy, mmol/m3", title = "Dissolved Oxygen Concentration") +
+                 labs(x = "Hour of day", y = bquote("oxy, mmol/"~m^3), title = "Dissolved Oxygen Concentration") +
                  theme_bw() +
                  scale_x_continuous(breaks = breaks, labels = labels) +
                  ylim(0,750) +
