@@ -101,7 +101,6 @@ server <- function(input, output) {
                  labs(x = "Hour of day", y = bquote("oxy, mmol/"~m^3), title = "Dissolved Oxygen Concentration") +
                  theme_bw() +
                  scale_x_continuous(breaks = breaks, labels = labels) +
-                 ylim(0,750) +
                  theme(axis.text=element_text(size=12), axis.title=element_text(size=14),
                        plot.title=element_text(size=20, face="bold"))
       
@@ -146,7 +145,6 @@ server <- function(input, output) {
       labs(x = "Hour of day", y = bquote("Flux, mmol/"~m^3/day), title = "Fluxes") +
       scale_color_manual(values = colors) +
       scale_x_continuous(breaks = breaks, labels = labels) +
-      ylim(-200,500) +
       theme(legend.position = c(0.96,0.85), axis.text=element_text(size=12), axis.title=element_text(size=14),
             legend.title=element_blank(), legend.text=element_text(size=12), 
             plot.title=element_text(size=20, face="bold"))
