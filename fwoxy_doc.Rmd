@@ -19,7 +19,7 @@ To understand how each of these terms affect the mass balance, the $fwoxy$ model
 $$
 \frac{d[O_{2}]}{dt} = \alpha I - R - \frac{k_{O_2}}{H}([O_{2}]-[O_{2}^{sat}]) \hskip{30mm} Equation\, 2
 $$
-The parameters of *Equation 2* are: photosynthetic active radiation, $I$ (W/m<sup>2</sup>); light efficiency, $\alpha$  ((mmol/m<sup>3</sup>) / (W/m<sup>2</sup>)); gas transfer velocity, $k_{O_2}$ (m/s); depth of the water column, $H$ (m); oxygen concentration, $[O_{2}]$ (mmol/m<sup>3</sup>); and oxygen saturation, $[O_{2}^{sat}]$ (mmol/m<sup>3</sup>). The gas transfer velocity is estimated using the parameterization of Wanninkhof (2014) based on wind speed (m/s), water temperature ($^{\circ}$C) and salinity (ppt). The oxygen saturation deficit, $([O_{2}]-[O_{2}^{sat}])$, is calculated using salinity and water temperature based on Millero and Poisson (1981) for seawater density (kg/m<sup>3</sup>) and Garcia and Gordon (1992) for oxygen saturation (mmol/m<sup>3</sup>).
+The parameters of *Equation 2* are: photosynthetic active radiation, $I$ (W/m<sup>2</sup>); light efficiency, $\alpha$  ((mmol/m<sup>3</sup>) / (W/m<sup>2</sup>)); gas transfer velocity, $k_{O_2}$ (m/s); depth of the water column, $H$ (m); oxygen concentration, $[O_{2}]$ (mmol/m<sup>3</sup>); and oxygen saturation, $[O_{2}^{sat}]$ (mmol/m<sup>3</sup>). The gas transfer velocity is estimated using the parameterization of Wanninkhof (2014) based on wind speed (m/s), water temperature (<span>&#176;</span>C) and salinity (ppt). The oxygen saturation deficit, $([O_{2}]-[O_{2}^{sat}])$, is calculated using salinity and water temperature based on Millero and Poisson (1981) for seawater density (kg/m<sup>3</sup>) and Garcia and Gordon (1992) for oxygen saturation (mmol/m<sup>3</sup>).
 
 
 ### Using the Forward Oxygen Model Application
@@ -27,12 +27,12 @@ The parameters of *Equation 2* are: photosynthetic active radiation, $I$ (W/m<su
 In the left hand sidebar are the constants and forcings that are applied to the oxygen mass balance. Every time a slider is moved the outputs on the right hand side of the page will refresh. The default parameters and initial oxygen concentration are set to a quasi steady state upon opening the $fwoxy$ application. **To return the inputs to the default setting just refresh the page in the internet browser.** The ranges of the parameters are based on the minimum and 95th percentile values from data collected at the Cat Point station within the Apalachicola Bay, Florida, National Estuarine Research Reserve during 2012.
 <br>
 <br>
-The top slider is the initial oxygen concentration (mmol/m^3^), whereas the remaining sliders are parameter constants.  $I$ (*Eq. 2*) is based on a sin function that reaches a maximum of 400 W/m^2^ at noon every day and is zero between the hours of 6:00 pm to 6:00 am. The length of the model run is 6 days at 15 minute intervals. 
+The top slider is the initial oxygen concentration (mmol/m<sup>3</sup>), whereas the remaining sliders are parameter constants.  $I$ (*Eq. 2*) is based on a sin function that reaches a maximum of 400 W/m<sup>2</sup> at noon every day and is zero between the hours of 6:00 pm to 6:00 am. The length of the model run is 6 days at 15 minute intervals. 
 <br>
 <br>
 
 #### Outputs
-On the right hand side are the output plots for $fwoxy$. The top panel shows the oxygen concentration (mmol/m^3^, bright blue) and oxygen saturation (mmol/m^3^, dark blue) within the water column every 15 minutes over the 6 day model run. The bottom panel shows the $TROC$ (light blue), $GPP$ (yellow), $F$ (red), and $R$ (purple) fluxes at rates of mmol/m^3^/day for every 15 minutes over the 6 day model run. All outputs automatically refresh whenever a slider is changed. 
+On the right hand side are the output plots for $fwoxy$. The top panel shows the oxygen concentration (mmol/m<sup>3</sup>, bright blue) and oxygen saturation (mmol/m<sup>3</sup>, dark blue) within the water column every 15 minutes over the 6 day model run. The bottom panel shows the $TROC$ (light blue), $GPP$ (yellow), $F$ (red), and $R$ (purple) fluxes at rates of mmol/m<sup>3</sup>/day for every 15 minutes over the 6 day model run. All outputs automatically refresh whenever a slider is changed. 
 <br>
 <br>
 
