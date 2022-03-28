@@ -137,7 +137,7 @@ server <- function(input, output) {
                 '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
                 '432001'='0','475201'='12')
     breaks <- seq(1,518400,by=43200)
-    varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw', 'oxysat')
+    varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
     colnames(results) <- varb
     colors <- c(F = "firebrick", GPP = "orange", R = "darkviolet", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
