@@ -54,9 +54,9 @@ ui <- fluidPage(
       br(),
       fluidRow(
         align = "center",
-        em(span("ER = Ecosystem Respiration;", style = "color:darkviolet"),
+        em(span("R = Ecosystem Respiration;", style = "color:darkviolet"),
          span("GPP = Gross Primary Productivity;", style = "color:orange"),
-         span("GASEX = Gas Exchange;", style = "color:firebrick"),
+         span("F = Gas Exchange;", style = "color:firebrick"),
          span("TROC = Time Rate of Change of Oxygen", style = "color:steelblue"))),
       br(),
       actionButton("show", "Help")
@@ -133,10 +133,10 @@ server <- function(input, output) {
     breaks <- seq(1,518400,by=43200)
     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
     colnames(results) <- varb
-    colors <- c(GASEX = "firebrick", GPP = "orange", ER = "darkviolet", TROC = "steelblue3")
+    colors <- c(F = "firebrick", GPP = "orange", R = "darkviolet", TROC = "steelblue3")
     fluxes <- data.frame(results$t, results$gasexd, results$gppd, results$erd, results$dcdtd)
-    colnames(fluxes) <- c('t', 'GASEX', 'GPP', 'ER', 'TROC')
-    resultsNew <- fluxes %>% pivot_longer(cols = GASEX:TROC, names_to = 'Variables', values_to = "Value")
+    colnames(fluxes) <- c('t', 'F', 'GPP', 'R', 'TROC')
+    resultsNew <- fluxes %>% pivot_longer(cols = F:TROC, names_to = 'Variables', values_to = "Value")
     
     # Plot fluxes
     fluxPlot <- ggplot(resultsNew, aes(x = t, y = Value, group = Variables, color = Variables)) +
