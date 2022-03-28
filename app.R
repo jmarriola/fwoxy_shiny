@@ -85,24 +85,30 @@ server <- function(input, output) {
              salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
     
      
-     # Set up plots
-     labels <- c('1'='0','43201'='12','86401'='0','129601'='12','172801'='0',
-                 '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
-                 '432001'='0','475201'='12')
-     breaks <- seq(1,518400,by=43200)
-     varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw')
-     colnames(results) <- varb
-     
+      # Set up plots
+    labels <- c('1'='0','43201'='12','86401'='0','129601'='12','172801'='0',
+                '216001'='12','259201'='0','302401'='12','345601'='0','388801'='12',
+                '432001'='0','475201'='12')
+    breaks <- seq(1,518400,by=43200)
+    varb <- c('t', 'c', 'dcdtd', 'gasexd', 'gppd', 'erd', 'oxysu', 'wspd2', 'sc', 'kw', 'oxysat')
+    colnames(results) <- varb
+    colors <- c(O2 = "blue", O2sat = "navy")
+    conc <- data.frame(results$t, results$c, results$oxysat)
+    colnames(conc) <- c('t', 'O2', 'O2sat')
+    resultsO2 <- conc %>% pivot_longer(cols = O2:O2sat, names_to = 'Variables', values_to = "Value")
     
-     # Oxygen Concentration plot
-     
-      oxyPlot <- ggplot(results, aes(x = t, y = c)) +
-                 geom_line(colour = "blue", size = 1.05) +
-                 labs(x = "Hour of day", y = bquote("oxy, mmol/"~m^3), title = "Dissolved Oxygen Concentration") +
-                 theme_bw() +
-                 scale_x_continuous(breaks = breaks, labels = labels) +
-                 theme(axis.text=element_text(size=12), axis.title=element_text(size=14),
-                       plot.title=element_text(size=20, face="bold"))
+    # Oxygen Concentration plot
+    
+    oxyPlot <- ggplot(resultsO2, aes(x = t, y = Value, group = Variables, color = Variables)) +
+      geom_line(size = 1.05) +
+      labs(x = "Hour of day", y = bquote("oxy, mmol/"~m^3), title = "Dissolved Oxygen Concentration") +
+      theme_bw() +
+      scale_color_manual(values = colors) +
+      scale_x_continuous(breaks = breaks, labels = labels) +
+      #ylim(0,750) +
+      theme(legend.position = c(0.05,0.90), axis.text=element_text(size=12), axis.title=element_text(size=14),
+            legend.title=element_blank(), legend.text=element_text(size=12), 
+            plot.title=element_text(size=20, face="bold"))
       
       print(oxyPlot)
     }
