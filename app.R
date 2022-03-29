@@ -29,7 +29,7 @@ ui <- fluidPage(
                   min = 100, max = 300, value = 250, step = 25),
       
       sliderInput("a_param", h4(HTML(paste0("Light efficiency ((mmol/m",tags$sup("3"),") / (W/m",tags$sup("2"),"))"))),
-                  min = 0.1, max = 1.0, value = 0.2, step = 0.1),
+                  min = 0.0, max = 1.0, value = 0.2, step = 0.1),
       
       sliderInput("er_param", h4(HTML(paste0("Ecosystem respiration (mmol/m",tags$sup("3"),"/day)"))),
                   min = 0, max = 80, value = 20, step = 10),
