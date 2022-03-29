@@ -59,7 +59,9 @@ ui <- fluidPage(
          span("F = Gas Exchange;", style = "color:firebrick"),
          span("TROC = Time Rate of Change of Oxygen", style = "color:steelblue"))),
       br(),
-      actionButton("show", "Help")
+      actionButton("show", "Help"),
+      downloadButton('download', "Data"),
+      fluidRow(dataTableOutput('table'))
     )
   ))
 
@@ -158,7 +160,7 @@ server <- function(input, output) {
     print(fluxPlot)
   }
  )
-   
+   ## Action button 1
    observeEvent(input$show, {
     showModal(modalDialog(
       withMathJax(includeMarkdown("./fwoxy_doc.Rmd")),
@@ -169,6 +171,30 @@ server <- function(input, output) {
     ),
     )
   })
+  
+  ## Action button 2
+  thedata <- reactive({
+    
+  # Input from UI
+  oxy_ic <- input$oxy_ic
+  a_param <- input$a_param
+  er_param <- input$er_param
+  ht_const <- input$ht_const
+  salt_const <- input$salt_const
+  temp_const <- input$temp_const
+  wspd_const <- input$wspd_const
+  
+  # Run model
+  results <- fwoxy(oxy_ic = oxy_ic, a_param = a_param, er_param = er_param, ht_in = ht_const, 
+                   salt_in = salt_const, temp_in = temp_const, wspd_in = wspd_const)
+     })
+  
+  output$table <- renderDataTable({thedata})
+  output$download <- downloadHandler(
+    filename = function(){"fwoxy_output.csv"},
+    content = function(file) {
+     write.csv(thedata(), file, row.names = FALSE)
+    })
 }
 
 # Run the application 
