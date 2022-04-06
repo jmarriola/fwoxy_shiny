@@ -26,9 +26,9 @@ ui <- fluidPage(
      sidebarPanel(
        
       sliderInput("oxy_ic", h4(HTML(paste0("Initial oxygen concentration (mmol/m",tags$sup("3"),")"))),
-                  min = 100, max = 300, value = 250, step = 25),
+                  min = 100, max = 400, value = 250, step = 25),
       
-      sliderInput("a_param", h4(HTML(paste0("Light efficiency ((mmol/m",tags$sup("3"),") / (W/m",tags$sup("2"),"))"))),
+      sliderInput("a_param", h4(HTML(paste0("Light efficiency ((mmol/m",tags$sup("3"),"/day) / (W/m",tags$sup("2"),"))"))),
                   min = 0.0, max = 1.0, value = 0.2, step = 0.1),
       
       sliderInput("er_param", h4(HTML(paste0("Ecosystem respiration (mmol/m",tags$sup("3"),"/day)"))),
